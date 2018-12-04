@@ -11,7 +11,33 @@ server = shinyServer(function(input, output, session) {
     })
     
     output$HomePageDescTitle = renderText('Objective of the Study')
-    output$HomePageDescription = renderText('The objective of this study is to compare the suicide rates in Greece with the rest Europian countries and determine if there is a higher incremental trend or a different behaviour')
+    
+    output$HomePageDescription = renderText(
+        paste0(
+            'The objective of this study is to compare the',
+            ' suicide rates in Greece with the rest Europian',
+            ' countries and determine if there is a higher',
+            ' incremental trend or a different behaviour.'
+        )
+    )
+    
+    output$OutcomeTitle = renderText('Outcome of the Study')
+    
+    output$OutcomeText = renderText(
+        paste0(
+            'From this study, we observe that Greece keeps on',
+            ' maintaining the lowest suicide rates in Europe throughout the years.',
+            ' There is an incremental trend, higher than average',
+            ' for European countries, but we can be sure',
+            ' that Greece is not an outlier and does not have a statistically significant',
+            ' increase for the periods indicated by the two datasets provided.',
+            ' Another interesting aspect of the study is that south and west European countries',
+            ' tend to have lower suicide rates. In addition,',
+            ' we observe that there might be a trend according to which',
+            ' European countries tend to come into balance and reach the European',
+            ' Union Average rates.'
+            )
+    )
     
     renderPlot1_1 = function() {
 
@@ -21,10 +47,10 @@ server = shinyServer(function(input, output, session) {
             subset(meltdf, LOCATION != "GRC") %>% 
                 group_by(TIME) %>% 
                 summarise(Value = mean(Value)) %>% 
-                mutate(LOCATION = 'Rest Europe Average*')
+                mutate(LOCATION = 'Rest Europe Average')
         )
         
-        restEuropeCountries = paste(unique(meltdf[!meltdf$LOCATION %in% c('GRC','Rest Europe Average*'),'LOCATION']),collapse = ',')
+        restEuropeCountries = paste(unique(meltdf[!meltdf$LOCATION %in% c('GRC','Rest Europe Average'),'LOCATION']),collapse = ',')
         meltdf = rbind(meltdf[,c("LOCATION","TIME","Value")],meltdfRestEurope[,c("LOCATION","TIME","Value")])
         
         colnames(meltdf) = c("Location", "Year", "Suicides")
@@ -65,10 +91,10 @@ server = shinyServer(function(input, output, session) {
             subset(meltdf, LOCATION != "GRC") %>% 
                 group_by(TIME) %>% 
                 summarise(Value = mean(Value)) %>% 
-                mutate(LOCATION = 'Rest Europe Average*')
+                mutate(LOCATION = 'Rest Europe Average')
         )
         
-        restEuropeCountries = paste(unique(meltdf[!meltdf$LOCATION %in% c('GRC','Rest Europe Average*'),'LOCATION']),collapse = ',')
+        restEuropeCountries = paste(unique(meltdf[!meltdf$LOCATION %in% c('GRC','Rest Europe Average'),'LOCATION']),collapse = ',')
         meltdf = rbind(meltdf[,c("LOCATION","TIME","Value")],meltdfRestEurope[,c("LOCATION","TIME","Value")])
         
         colnames(meltdf) = c("Location", "Year", "Suicides")
@@ -106,10 +132,10 @@ server = shinyServer(function(input, output, session) {
             subset(meltdf, LOCATION != "GRC") %>% 
                 group_by(TIME) %>% 
                 summarise(Value = mean(Value)) %>% 
-                mutate(LOCATION = 'Rest Europe Average*')
+                mutate(LOCATION = 'Rest Europe Average')
         )
         
-        restEuropeCountries = paste(unique(meltdf[!meltdf$LOCATION %in% c('GRC','Rest Europe Average*'),'LOCATION']),collapse = ',')
+        restEuropeCountries = paste(unique(meltdf[!meltdf$LOCATION %in% c('GRC','Rest Europe Average'),'LOCATION']),collapse = ',')
         meltdf = rbind(meltdf[,c("LOCATION","TIME","Value")],meltdfRestEurope[,c("LOCATION","TIME","Value")])
         
         colnames(meltdf) = c("Location", "Year", "Suicides")
@@ -131,10 +157,10 @@ server = shinyServer(function(input, output, session) {
             subset(meltdf, LOCATION != "GRC") %>% 
                 group_by(TIME) %>% 
                 summarise(Value = mean(Value)) %>% 
-                mutate(LOCATION = 'Rest Europe Average*')
+                mutate(LOCATION = 'Rest Europe Average')
         )
         
-        restEuropeCountries = paste(unique(meltdf[!meltdf$LOCATION %in% c('GRC','Rest Europe Average*'),'LOCATION']),collapse = ',')
+        restEuropeCountries = paste(unique(meltdf[!meltdf$LOCATION %in% c('GRC','Rest Europe Average'),'LOCATION']),collapse = ',')
         meltdf = rbind(meltdf[,c("LOCATION","TIME","Value")],meltdfRestEurope[,c("LOCATION","TIME","Value")])
         
         colnames(meltdf) = c("Location", "Year", "Suicides")

@@ -9,11 +9,24 @@ library(highcharter)
 library(RColorBrewer)
 library(ggplot2)
 library(ggthemes)
+library(shinythemes)
 
 source('scriptPlots.r')
 
-ui = navbarPage("Suicide Rates in Europe", id = "VoltronTabs",
+ui = navbarPage(
+    "Suicide Rates in Europe",
+    id = "VoltronTabs",
+    theme = shinytheme("cerulean"),
+    selected = 'Home',
     useShinyjs(),
+    tags$style(
+        HTML(
+            'table.dataTable tr.selected td, table.dataTable td.selected{
+                background-color: hsla(210,94%,64%,1) !important; 
+                color:white;
+            }'
+        )
+    ),
     tags$script("Shiny.addCustomMessageHandler('resetValue', function(variableName) {Shiny.onInputChange(variableName, null);});"),
     tabPanel("Home",
         fluidRow(
@@ -61,6 +74,7 @@ ui = navbarPage("Suicide Rates in Europe", id = "VoltronTabs",
                     br(),
                     br(),
                     br(),
+                    br(),
                     textOutput('HomePageDescTitle')
                 ),
                 div(
@@ -84,8 +98,8 @@ ui = navbarPage("Suicide Rates in Europe", id = "VoltronTabs",
                     prettyCheckboxGroup(
                         inputId = 'FDCountrySelector',
                         label = 'Select Countries',
-                        choices = c("AUT","BEL","CZE","DNK","FIN","FRA","DEU","GRC","HUN","IRL","ITA","LUX","NLD","POL","PRT","SVK",'Rest Europe Average*',"ESP","SWE","GBR","EST","SVN","LVA","LTU"),
-                        selected = c('GRC','Rest Europe Average*'),
+                        choices = c("AUT","BEL","CZE","DNK","FIN","FRA","DEU","GRC","HUN","IRL","ITA","LUX","NLD","POL","PRT","SVK",'Rest Europe Average',"ESP","SWE","GBR","EST","SVN","LVA","LTU"),
+                        selected = c('GRC','Rest Europe Average'),
                         inline = TRUE,
                         status = "info",
                         animation = 'tada'
@@ -96,7 +110,7 @@ ui = navbarPage("Suicide Rates in Europe", id = "VoltronTabs",
                     selectInput(
                         inputId = 'FDCountrySelector2',
                         label = 'Choose Coyntry',
-                        choices = c("AUT","BEL","CZE","DNK","FIN","FRA","DEU","GRC","HUN","IRL","ITA","LUX","NLD","POL","PRT","SVK",'Rest Europe Average*',"ESP","SWE","GBR","EST","SVN","LVA","LTU"),
+                        choices = c("AUT","BEL","CZE","DNK","FIN","FRA","DEU","GRC","HUN","IRL","ITA","LUX","NLD","POL","PRT","SVK",'Rest Europe Average',"ESP","SWE","GBR","EST","SVN","LVA","LTU"),
                         selected = 'GRC'
                     )
                 )
@@ -169,5 +183,26 @@ ui = navbarPage("Suicide Rates in Europe", id = "VoltronTabs",
             )
         )
                    
+    ),
+    tabPanel("Outcome",
+        br(),
+        br(),
+        br(),
+        br(),
+        br(),
+        br(),
+        br(),
+        br(),
+        div(
+            style = 'text-align:center;font-size:19px;',
+            textOutput('OutcomeTitle')
+        ),
+        br(),
+        br(),
+        div(
+            style = 'text-align:center;font-size:16px;',
+            textOutput('OutcomeText')
+        )
     )
+             
 )
