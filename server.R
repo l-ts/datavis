@@ -211,13 +211,12 @@ server = shinyServer(function(input, output, session) {
         },height = 2000)
     }
     
-    Countries = data.frame(cbind(num = seq(nrow(suicide1DF)),country = sort(as.character(unique(suicide1DF$GEOSEX)))))
+    Countries = data.frame(cbind(num = seq(nrow(suicide1DF)),Country = sort(as.character(unique(suicide1DF$GEOSEX)))))
     
     output$plot2_3dt = DT::renderDataTable({
         datatable(
             Countries,
             rownames=FALSE,
-            colnames = FALSE,
             selection = list(mode = "single",selected = 1),
             extensions = c('Scroller'),
             callback = JS(" table.on('click', 'td', function() {
