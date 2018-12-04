@@ -4,11 +4,17 @@ library(shinyjs)
 library(shinyBS)
 library(DT)
 library(shinycssloaders)
+library(maptools)
+library(highcharter)
+library(RColorBrewer)
+library(ggplot2)
+library(ggthemes)
 
 source('scriptPlots.r')
 
-ui = navbarPage("Suicides in EU", id = "VoltronTabs",
+ui = navbarPage("Suicide Rates in Europe", id = "VoltronTabs",
     useShinyjs(),
+    tags$script("Shiny.addCustomMessageHandler('resetValue', function(variableName) {Shiny.onInputChange(variableName, null);});"),
     tabPanel("Home",
         fluidRow(
             column(4,
@@ -65,15 +71,7 @@ ui = navbarPage("Suicides in EU", id = "VoltronTabs",
                     br()
                 )
             )
-        ),
-        fluidRow(
-            column(12,
-                   div(
-                       style = 'border-top:1px solid #000000;'
-                   )
-            )
         )
-        
     ),
     tabPanel("First Dataset",
         fluidRow(
@@ -130,7 +128,7 @@ ui = navbarPage("Suicides in EU", id = "VoltronTabs",
     tabPanel("Second Dataset",
         fluidRow(
             column(12,
-                selectInput("SD",'Choose Plot',choices = c('Plot 1', 'Plot 2')),
+                selectInput("SD",'',choices = c('Plot 1', 'Plot 2','Plot 3')),
                 br(),
                 plotOutput('SDPlot')
             )
@@ -140,7 +138,33 @@ ui = navbarPage("Suicides in EU", id = "VoltronTabs",
                 br(),
                 conditionalPanel(
                     condition = "input.SD == 'Plot 1'",
-                    imageOutput("myImage")
+                    div(
+                        style='padding-top:0; margin-top:-30%;',
+                        plotOutput("SDPlot1")
+                    )
+                ),
+                conditionalPanel(
+                    condition = "input.SD == 'Plot 2'",
+                    div(
+                        style='padding-top:0; margin-top:-90%;',
+                        plotOutput("SDPlot2")
+                    )
+                ),
+                conditionalPanel(
+                    condition = "input.SD == 'Plot 3'",
+                    column(4,
+                        div(
+                            style='padding-top:0; margin-top:-100%;',
+                            DT::dataTableOutput("plot2_3dt")
+                        )
+                    ),
+                    column(2),
+                    column(4,
+                        div(
+                            style='padding-top:0; margin-top:-92%;',
+                            plotOutput("SDPlot3")
+                        )
+                    )
                 )
             )
         )
